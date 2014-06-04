@@ -11,13 +11,11 @@ module Astapor
                 "#{self.class.name}: #{datetime}: #{severity}: #{msg}\n"
             end
             
-            if ENV['SERF_EVENT'] == 'user':
-                @event = ENV['SERF_USER_EVENT']
+            if ENV['SERF_EVENT'] == 'user'
+                @event = ENV['SERF_USER_EVENT'].gsub '-', '_'
             else
-                @event = ENV['SERF_EVENT'].gsub! '-', '_'
+                @event = ENV['SERF_EVENT'].gsub '-', '_'
             end
-
-            @payload = ARGF.read
         end
     end
 
@@ -51,7 +49,7 @@ module Astapor
                     method_object = klass.method(@event.to_sym) 
                     method_object.call
                 rescue NameError => e
-                    @logger.error("event #{@event} not implemented by class")
+                    @logger.info("event #{@event} not implemented by #{klass.class.name} class")
                 end
             end
         end
