@@ -10,10 +10,20 @@ module Astapor
             @logger.formatter = proc do |severity, datetime, progname, msg|
                 "#{self.class.name}: #{datetime}: #{severity}: #{msg}\n"
             end
+            @tags = Hash.new
+
+            # collect all tags
+            ENV.each do |key, tag|
+                if key.start_with('SERF_TAG_')
+                    @tags[key.sub(/^SERF_TAG_/, '').downcase] = tag.downcase
+                end
+            end
             
             if ENV['SERF_EVENT'] == 'user'
                 @event = ENV['SERF_USER_EVENT'].gsub '-', '_'
-            else
+            elsif ENV['SERF_EVENT'] == 'query'
+                @event = ENV['SERF_QUERY_NAME'].gsub '-', '_'
+            else                
                 @event = ENV['SERF_EVENT'].gsub '-', '_'
             end
         end
