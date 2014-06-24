@@ -14,7 +14,7 @@ module Astapor
 
             # collect all tags
             ENV.each do |key, tag|
-                if key.start_with('SERF_TAG_')
+                if key.start_with?('SERF_TAG_')
                     @tags[key.sub(/^SERF_TAG_/, '').downcase] = tag.downcase
                 end
             end
