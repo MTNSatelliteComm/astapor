@@ -1,4 +1,5 @@
-# Astapor
+# Astapor 
+# THIS REPO IS OBSOLETE, USE https://github.com/ranjib/serfx INSTEAD
 
 A ruby port of https://github.com/garethr/serf-master
 
